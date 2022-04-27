@@ -1,0 +1,276 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Admin panel</title>
+    <!-- CSS files -->
+    <link href="{% static 'css/tabler.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-flags.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-payments.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-vendors.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/demo.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+
+    <!-- JQUERY -->
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.production.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
+
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+</head>
+
+<body class="antialiased">
+    <div class="wrapper">
+        <header class="navbar navbar-expand-md navbar-light d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="/">
+                        <img src="{% static 'img/logo_ksb.svg' %}" width="110" height="32" alt="Logo"
+                            class="navbar-brand-image">
+                    </a>
+                </h1>
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                            aria-label="Open user menu">
+                            <span
+                                class="avatar avatar-sm avatar-rounded">{{user.first_name|make_list|first}}{{user.last_name|make_list|first}}</span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div>{{user.first_name}} {{user.last_name}}</div>
+                                <div class="mt-1 small text-muted"></div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="#" class="dropdown-item">Perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Configuración</a>
+                            <a href="{% url 'logout' %}" class="dropdown-item">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="navbar-expand-md">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <div class="navbar navbar-light">
+                    <div class="container-xl">
+                        <ul class="navbar-nav">
+                            <li class="nav-item" id="nav-item-inicio">
+                                <a class="nav-link" href="/">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Inicio
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id='nav-item-planificacion'>
+                                <a class="nav-link" href="{% url 'planificacion' %}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/calendar-time -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+                                            <circle cx="18" cy="18" r="4" />
+                                            <path d="M15 3v4" />
+                                            <path d="M7 3v4" />
+                                            <path d="M3 11h16" />
+                                            <path d="M18 16.496v1.504l1 1" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Planificaciones
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id='nav-item-tracking'>
+                                <a class="nav-link" href="{% url 'tracking' %}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/truck-delivery -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <circle cx="7" cy="17" r="2" />
+                                            <circle cx="17" cy="17" r="2" />
+                                            <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                            <line x1="3" y1="9" x2="7" y2="9" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Tracking
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id='nav-item-indicadores'>
+                                <a class="nav-link" href="{% url 'indicadores' %}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/chart-dots -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M3 3v18h18" />
+                                            <circle cx="9" cy="9" r="2" />
+                                            <circle cx="19" cy="7" r="2" />
+                                            <circle cx="14" cy="15" r="2" />
+                                            <line x1="10.16" y1="10.62" x2="12.5" y2="13.5" />
+                                            <path d="M15.088 13.328l2.837 -4.586" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Indicadores
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown" id='nav-item-agenda'>
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                                    role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
+                                            <line x1="12" y1="12" x2="20" y2="7.5" />
+                                            <line x1="12" y1="12" x2="12" y2="21" />
+                                            <line x1="12" y1="12" x2="4" y2="7.5" />
+                                            <line x1="16" y1="5.25" x2="8" y2="9.75" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Agenda retiro clientes
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{% url 'agendar_retiro' %}">
+                                                Agendar
+                                            </a>
+                                            <a class="dropdown-item" href="{% url 'buscar_retiro' %}">
+                                                Buscar
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            <li class="nav-item dropdown" id='nav-item-packing'>
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                                    role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                            <rect x="9" y="3" width="6" height="4" rx="2" />
+                                            <line x1="9" y1="12" x2="9.01" y2="12" />
+                                            <line x1="13" y1="12" x2="15" y2="12" />
+                                            <line x1="9" y1="16" x2="9.01" y2="16" />
+                                            <line x1="13" y1="16" x2="15" y2="16" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Packing-List
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{% url 'packing_list' %}">
+                                                Generar PL
+                                            </a>
+                                            <a class="dropdown-item" href="{% url 'buscar_packing_list' %}">
+                                                Buscar
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown" id='nav-item-despacho'>
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                                    role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
+                                            <line x1="12" y1="12" x2="20" y2="7.5" />
+                                            <line x1="12" y1="12" x2="12" y2="21" />
+                                            <line x1="12" y1="12" x2="4" y2="7.5" />
+                                            <line x1="16" y1="5.25" x2="8" y2="9.75" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Despacho con agendamiento
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{% url 'despacho_agendamiento' %}">
+                                                Despacho
+                                            </a>
+                                            <a class="dropdown-item" href="{% url 'buscar_despacho_agendamiento' %}">
+                                                Buscar
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Libs JS -->
+    <!-- GRAFICOS -->
+    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'libs/litepicker/dist/litepicker.js' %}"></script>
+
+    <!-- Tabler Core -->
+    <script src="{% static 'js/tabler.min.js' %}"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,529 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    Agenda retiro clientes
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <!-- Content here -->
+        <div class="row row-cards">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class='card-header'>
+                        <h3 class="card-title">Agendar retiro</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group mb-3 row">
+                                <label class="form-label col-3 col-form-label">Fecha</label>
+                                <div class="col-xl-4">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <rect x="4" y="5" width="16" height="16" rx="2" />
+                                                <line x1="16" y1="3" x2="16" y2="7" />
+                                                <line x1="8" y1="3" x2="8" y2="7" />
+                                                <line x1="4" y1="11" x2="20" y2="11" />
+                                                <line x1="11" y1="15" x2="12" y2="15" />
+                                                <line x1="12" y1="15" x2="12" y2="18" />
+                                            </svg>
+                                        </span>
+                                        <input class="form-control" placeholder="Fecha" id="fecha-retiro"
+                                            name='fecha-retiro' type='text' autocomplete="off" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3 row">
+                                <label class="form-label col-3 col-form-label">Rango horario</label>
+                                <div class="col-xl-4">
+                                    <select type="text" class="form-select" id="rango-horario" name="rango-horario"
+                                        value="">
+                                        <option value="" disabled selected>Seleccionar tipo</option>
+                                        <option value="00:00 - 01:00">00:00 - 01:00</option>
+                                        <option value="01:00 - 02:00">01:00 - 02:00</option>
+                                        <option value="02:00 - 03:00">02:00 - 03:00</option>
+                                        <option value="03:00 - 04:00">03:00 - 04:00</option>
+                                        <option value="04:00 - 05:00">04:00 - 05:00</option>
+                                        <option value="05:00 - 06:00">05:00 - 06:00</option>
+                                        <option value="06:00 - 07:00">06:00 - 07:00</option>
+                                        <option value="07:00 - 08:00">07:00 - 08:00</option>
+                                        <option value="08:00 - 09:00">08:00 - 09:00</option>
+                                        <option value="09:00 - 10:00">09:00 - 10:00</option>
+                                        <option value="10:00 - 11:00">10:00 - 11:00</option>
+                                        <option value="11:00 - 12:00">11:00 - 12:00</option>
+                                        <option value="12:00 - 13:00">12:00 - 13:00</option>
+                                        <option value="13:00 - 14:00">13:00 - 14:00</option>
+                                        <option value="14:00 - 15:00">14:00 - 15:00</option>
+                                        <option value="15:00 - 16:00">15:00 - 16:00</option>
+                                        <option value="16:00 - 17:00">16:00 - 17:00</option>
+                                        <option value="17:00 - 18:00">17:00 - 18:00</option>
+                                        <option value="18:00 - 19:00">18:00 - 19:00</option>
+                                        <option value="19:00 - 20:00">19:00 - 20:00</option>
+                                        <option value="20:00 - 21:00">20:00 - 21:00</option>
+                                        <option value="21:00 - 22:00">21:00 - 22:00</option>
+                                        <option value="22:00 - 23:00">22:00 - 23:00</option>
+                                        <option value="23:00 - 00:00">23:00 - 00:00</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Orden de venta</label>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">
+                                                OV
+                                            </span>
+                                            <input type="text" class="form-control" name="ov_input" id="ov_input"
+                                                placeholder="EJ: 244174">
+                                        </div>
+                                        <!-- <input type="text" class="form-control" name="ov_input" id="ov_input"
+                                            placeholder="EJ: OV243266"> -->
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="mb-3">
+                                        <label class="form-label">Línea</label>
+                                        <input type="text" class="form-control" name="linea_input" id="linea_input"
+                                            placeholder="EJ: 1">
+                                    </div>
+                                    <div class="mb-3" style="display:none">
+                                        <input type="text" class="form-control" name="cliente_input" id="cliente_input">
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 mb-3">
+                                    <label class="form-label" style="visibility: hidden;">bt</label>
+                                    <button class="btn btn-primary w-100" id='btn-agregar-ov' type="button">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                        Agregar OV/Línea
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="d-flex justify-content-center align-items-center mb-n3 mt-3"> -->
+
+                            <div class="table-responsive">
+                                <div class="gridjs gridjs-container">
+                                    <table class="gridjs-table" id='tabla-ov'>
+                                        <thead class="gridjs-thead">
+                                            <tr class="gridjs-tr">
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed text-center"
+                                                    style="width: 200px;">
+                                                    ORDEN DE VENTA</th>
+                                                <th class=" gridjs-th gridjs-th-sort gridjs-th-fixed text-center"
+                                                    style="width: 200px;">
+                                                    LÍNEA
+                                                </th>
+                                                <th class=" gridjs-th gridjs-th-sort gridjs-th-fixed text-center"
+                                                    style="width: 100px;">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class=" gridjs-tbody" style="text-align: center;">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <!-- </div> -->
+                    </div>
+                    <div class="card-footer text-end">
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-success ms-auto" id="btn-guardar-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-plus"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z">
+                                    </path>
+                                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                                </svg>
+                                Guardar y generar PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<iframe id="my_iframe" style="display:none;"></iframe>
+<div class="modal modal-blur fade" id="modal-error-validar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted" id='content-error-validar'>No se encontro la orden de venta y/o linea ingresadas
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal-error-guardar-retiro" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted" id='content-error-guardar-retiro'>Error al registrar el retiro</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal-retiro-guardado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-success"></div>
+            <div class="modal-body text-center py-4">
+
+                <!-- Download SVG icon from http://tabler-icons.io/i/file-check -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-success icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                    <path d="M9 15l2 2l4 -4" />
+                </svg>
+
+                <h3>Retiro agendado</h3>
+                <div class="text-muted">Se agendó correctamente el retiro</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-success w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const e = document.getElementById('nav-item-agenda')
+    e.classList.add('active')
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const picker = new Litepicker({
+            element: document.getElementById('fecha-retiro'),
+            autoRefresh: true,
+            format: 'DD/MM/YYYY',
+            lang: 'es-ES',
+            minDate: Date.now(),
+            buttonText: {
+                previousMonth:
+                    `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <polyline points="15 6 9 12 15 18" />
+                        </svg>`,
+                nextMonth:
+                    `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <polyline points="9 6 15 12 9 18" />
+                        </svg>`,
+            },
+        });
+    })
+</script>
+<script>
+    var list_ov = []
+
+    function eliminarFila(ov, linea) {
+        if (list_ov.includes(ov + linea)) {
+            alert(list_ov.length)
+            var index = list_ov.indexOf(ov + linea);
+
+            if (index !== -1) {
+                list_ov.splice(index, 1);
+            }
+
+            if (list_ov.length == 0) {
+                document.getElementById("cliente_input").value = ''
+            }
+
+        }
+        var td = event.target.parentNode;
+        var tr = td.parentNode;
+        tr.parentNode.removeChild(tr);
+
+    }
+
+    $("#btn-agregar-ov").on('click', function (e) {
+        var ov = 'OV' + document.getElementById('ov_input').value
+        var linea = document.getElementById('linea_input').value
+        var cliente = document.getElementById('cliente_input').value
+        if ($('#linea_input').val() == '' || $('#ov_input').val() == '') {
+            e.preventDefault();
+
+            if ($('#linea_input').val() == '') {
+                $('#linea_input').addClass('is-invalid');
+                $('#content-error-guardar-retiro').text('Debe ingresar una linea asociada a la orden de venta')
+                $("#modal-error-guardar-retiro").modal('show');
+            }
+            if ($('#ov_input').val() == '') {
+                $('#ov_input').addClass('is-invalid');
+                $('#content-error-guardar-retiro').text('Debe ingresar una orden de venta ')
+                $("#modal-error-guardar-retiro").modal('show');
+            }
+            if ($('#linea_input').val() == '' && $('#ov_input').val() == '') {
+                $('#content-error-guardar-retiro').text('Debe ingresar una orden de venta y línea')
+                $("#modal-error-guardar-retiro").modal('show');
+            }
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'validar_linea_retiro' %}",
+                data: {
+                    'orden_venta': ov,
+                    'linea': linea,
+                },
+                success: function (response) {
+                    if (response['valid']) {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{% url 'validar_orden' %}",
+                            data: {
+                                'orden_venta': ov,
+                                'linea': linea,
+                                'cliente': cliente
+                            },
+                            dataType: "json",
+                            success: function (response) {
+                                if (list_ov.includes(ov + linea)) {
+                                    $('#content-error-validar').text('La orden de venta/línea ingresada ya existe en la tabla')
+                                    $("#modal-error-validar").modal('show');
+                                } else if (response['valid']) {
+                                    if (ov !== '' && linea !== '') {
+                                        list_ov.push(ov + linea)
+                                        $("#tabla-ov").append(`<tr class="gridjs-tr">
+                                             <td class="gridjs-td">
+                                             <input type="hidden" name="${ov}-${linea}" value="${ov}-${linea}" id='${ov}-${linea}'>${ov}</td>
+                                             <td class="gridjs-td">${linea}</td>
+                                             <td class="gridjs-td">
+                                                 <a class="btn btn-danger" onclick="eliminarFila('${ov}','${linea}')">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                 <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                 <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                 <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                 <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                                 </svg>
+                                                 Eliminar
+                                                 </a>
+                                             </td>
+                                             </tr>`);
+                                        document.getElementById("cliente_input").value = response['cliente']
+                                        $('#ov_input').removeClass("is-invalid");
+                                        $('#linea_input').removeClass("is-invalid");
+
+                                        document.getElementById('ov_input').value = ""
+                                        document.getElementById('linea_input').value = ""
+                                    }
+                                } else {
+                                    var texto = response['detalles']
+                                    if (!response['cliente']) {
+                                        // alert('texto')
+                                        $('#content-error-validar').text(texto)
+                                        $("#modal-error-validar").modal('show');
+                                        $('#ov_input').addClass('is-invalid');
+                                        $('#linea_input').addClass('is-invalid');
+                                    } else {
+                                        $("#modal-error-validar").modal('show');
+                                        $('#ov_input').addClass('is-invalid');
+                                        $('#linea_input').addClass('is-invalid');
+
+                                    }
+                                    // alert('NO VALIDA')
+                                }
+                            },
+                            error: function (response) {
+                                data = JSON.parse(response.responseText)
+                                $('#content-error-validar').text(data['detalles'])
+                                $("#modal-error-validar").modal('show');
+
+                            }
+                        })
+                    }
+                }, error: function (response) {
+                    data = JSON.parse(response.responseText)
+                    $('#content-error-validar').text(data['detalles'])
+                    $("#modal-error-validar").modal('show');
+                }
+            })
+
+        }
+
+    });
+
+</script>
+
+<script>
+    $("#btn-guardar-pdf").on('click', function (e) {
+        var filas = document.getElementById("tabla-ov").rows.length;
+        if ($('#fecha-retiro').val() == '' || $('#rango-horario').val() == null) {
+            e.preventDefault()
+            $('#content-error-guardar-retiro').text('Seleccione una fecha de retiro y un rango horario')
+            $("#modal-error-guardar-retiro").modal('show');
+            if ($('#rango-horario').val() == null) {
+                $('#rango-horario').addClass('is-invalid');
+            }
+            if ($('#fecha-retiro').val() == '') {
+                $('#fecha-retiro').addClass('is-invalid');
+            }
+
+
+        } else if (filas < 2) {
+            e.preventDefault()
+            $('#content-error-guardar-retiro').text('Debe agregar al menos una orden de venta para agendar el retiro')
+            $("#modal-error-guardar-retiro").modal('show');
+
+        }
+
+    })
+</script>
+
+<script>
+    $("#linea_input").on('click', function (e) {
+        event.stopPropagation();
+        $('#linea_input').removeClass("is-invalid");
+    })
+    $("#ov_input").on('click', function (e) {
+        event.stopPropagation();
+        $('#ov_input').removeClass("is-invalid");
+    })
+    $("#fecha-retiro").on('click', function (e) {
+        event.stopPropagation();
+        $('#fecha-retiro').removeClass("is-invalid");
+    })
+    $("#rango-horario").on('click', function (e) {
+        event.stopPropagation();
+        $('#rango-horario').removeClass("is-invalid");
+    })
+</script>
+
+{% if guardado %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modal-retiro-guardado").modal('show');
+        document.getElementById('my_iframe').src = `{% url 'buscar_retiro_pdf' %}?retiro={{retiro}}`
+
+    });
+</script>
+{% endif %}
+
+{% if error %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modal-error-guardar-retiro").modal('show');
+        $('#content-error-guardar-retiro').text('{{detalles}}')
+    });
+</script>
+{% endif %}
+
+<script>
+    function setInputFilter(textbox, inputFilter) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+            textbox.addEventListener(event, function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                } else {
+                    this.value = "";
+                }
+            });
+        });
+    }
+    setInputFilter(document.getElementById("linea_input"), function (value) {
+        return /^\d*$/.test(value);
+    });
+</script>
+
+
+
+{% endblock %}

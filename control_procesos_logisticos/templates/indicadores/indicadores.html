@@ -1,0 +1,1015 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    Indicadores
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="col-12">
+                <div class="card-group nav nav-tabs flex-column flex-sm-row" data-bs-toggle="tabs">
+                    <a href="#lineas-tipo-despacho" class="card text-center" data-bs-toggle="tab"
+                        id='tab-tipo-despacho'>
+                        <div class="card-body">
+                            <p>Líneas a despachar según tipo de despacho</p>
+                        </div>
+                    </a>
+                    <a href="#lineas-tipo-venta" class="card text-center" data-bs-toggle="tab" id="tab-tipo-venta">
+                        <div class="card-body">
+                            <p>Líneas a despachar según tipo de venta</p>
+                        </div>
+                    </a>
+                    <a href="#estado-carga" class="card text-center" data-bs-toggle="tab" id="tab-carga">
+                        <div class="card-body">
+                            <p>Estado de carga por tarea</p>
+                        </div>
+                    </a>
+                    <a href="#progreso-despacho" class="card text-center" data-bs-toggle="tab" id="tab-progreso">
+                        <div class="card-body">
+                            <p>Progreso diario de despachos</p>
+                        </div>
+                    </a>
+                    <a href="#reportes-graficos" class="card text-center" data-bs-toggle="tab" id="tab-reportes">
+                        <div class=" card-body">
+                            <p>Reportes gráficos</p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+            <div class="card-body" id="card-container" style="display: none;">
+                <div class="tab-content">
+                    <div class="tab-pane" id="lineas-tipo-despacho">
+
+                        <div class="row row-deck row-cards">
+                            <div class="card-header">
+                                <h3 class="card-title">Lineas a despachar según tipo de despacho</h3>
+                            </div>
+                            {% if datos_despacho %}
+                            {% for despacho in datos_despacho %}
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="card bg-yellow-lt">
+                                    <div class="card-body p-2">
+                                        <div class="text-dark text-center">
+                                            <h3>{{despacho.tipo}}</h3>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="float-lg-start" style="font-size: 1rem;">Cantidad de
+                                                            lineas
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end" style="font-size: 1rem;">
+                                                            {{despacho.cant_lineas}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end text-green" style="font-size: 1rem;">
+                                                            {{despacho.porc_lineas}}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="float-lg-start" style="font-size: 1rem;">Ingresos por
+                                                            despacho
+                                                            (CLP)
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end" style="font-size: 1rem;">
+                                                            ${{despacho.valor}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end text-green" style="font-size: 1rem;">
+                                                            {{despacho.porc_valor}}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="page-body">
+                                <div class="container-xl d-flex flex-column justify-content-center">
+                                    <div class="empty">
+                                        <div class="empty-img"><img src="{% static 'img/no-data.svg' %}" height="128"
+                                                alt="">
+                                        </div>
+                                        <p class="empty-title">No se encontraron resultados</p>
+                                        <p class="empty-subtitle text-muted">
+                                            No hay datos disponibles para desplegar los indicadores de rendimiento
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <span></span>
+                        <!-- FIN TIPO DE DESPACHO -->
+
+                    </div>
+
+                    <div class="tab-pane" id="lineas-tipo-venta">
+                        <div class="row row-deck row-cards">
+                            <div class="card-header">
+                                <h3 class="card-title">Lineas a despachar según tipo de venta</h3>
+                            </div>
+                            {% if datos_venta %}
+                            {% for venta in datos_venta %}
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="card bg-lime-lt">
+                                    <div class="card-body p-2">
+                                        <div class="text-dark text-center">
+                                            <h3>{{venta.tipo}}</h3>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="float-lg-start" style="font-size: 1rem;">Cantidad de
+                                                            lineas
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end" style="font-size: 1rem;">
+                                                            {{venta.cant_lineas}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end text-green" style="font-size: 1rem;">
+                                                            {{venta.porc_lineas}}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="float-lg-start" style="font-size: 1rem;">Ingresos por
+                                                            despacho
+                                                            (CLP)
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end" style="font-size: 1rem;">
+                                                            ${{venta.valor}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <p class="float-lg-end text-green" style="font-size: 1rem;">
+                                                            {{venta.porc_valor}}%
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="page-body">
+                                <div class="container-xl d-flex flex-column justify-content-center">
+                                    <div class="empty">
+                                        <div class="empty-img"><img src="{% static 'img/no-data.svg' %}" height="128"
+                                                alt="">
+                                        </div>
+                                        <p class="empty-title">No se encontraron resultados</p>
+                                        <p class="empty-subtitle text-muted">
+                                            No hay datos disponibles para desplegar los indicadores de rendimiento
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+
+                        <span></span>
+                        <!-- FIN TIPO DE VENTA -->
+
+                    </div>
+
+                    <div class="tab-pane" id="estado-carga">
+
+                        <div class="row row-deck row-cards">
+                            <div class="card-header">
+                                <h3 class="card-title">Estado de carga por tareas</h3>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body p-2 text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                        data-bs-placement="right"
+                                        title="{% for lib in list_no_liberada %}<p class='tooltip-text'>{{lib}}</p> {% endfor %}"
+                                        data-container='body'>
+                                        <div class="text-end text-green">
+                                            <span class="text-green d-inline-flex align-items-center lh-1"
+                                                style="font-size: 19px;">
+                                                {{datos_no_liberada.porc_lineas}}%
+
+                                            </span>
+                                        </div>
+                                        <div class="h1 m-0">{{datos_no_liberada.cant_lineas}}</div>
+                                        <div class="text-muted mb-3">Líneas no liberadas</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body p-2 text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                        data-bs-placement="right"
+                                        title="{% for pick in list_picking %}<p class='tooltip-text'>{{pick}}</p> {% endfor %}"
+                                        data-container='body'>
+                                        <div class="text-end text-green">
+                                            <span class="text-green d-inline-flex align-items-center lh-1"
+                                                style="font-size: 19px;">
+                                                {{datos_picking.porc_lineas}}%
+
+                                            </span>
+                                        </div>
+                                        <div class="h1 m-0">{{datos_picking.cant_lineas}}</div>
+                                        <div class="text-muted mb-3">Líneas en picking</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body p-2 text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                        data-bs-placement="right"
+                                        title="{% for emb in list_embalaje %}<p class='tooltip-text'>{{emb}}</p> {% endfor %}"
+                                        data-container='body'>
+                                        <div class="text-end text-green">
+                                            <span class="text-green d-inline-flex align-items-center lh-1"
+                                                style="font-size: 19px;">
+                                                {{datos_embalaje.porc_lineas}}%
+
+                                            </span>
+                                        </div>
+                                        <div class="h1 m-0">{{datos_embalaje.cant_lineas}}</div>
+                                        <div class="text-muted mb-3">Líneas en embalaje</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+
+                                <div class="card">
+                                    <div class="card-body p-2 text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                        data-bs-placement="right"
+                                        title="{% for rep in list_reparto %}<p class='tooltip-text'>{{rep}}</p> {% endfor %}"
+                                        data-container='body'>
+                                        <div class="text-end text-green">
+                                            <span class="text-green d-inline-flex align-items-center lh-1"
+                                                style="font-size: 19px;">
+                                                {{datos_reparto.porc_lineas}}%
+
+                                            </span>
+                                        </div>
+                                        <div class="h1 m-0">{{datos_reparto.cant_lineas}}</div>
+                                        <div class="text-muted mb-3">Líneas en reparto</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="progreso-despacho">
+
+                        <div class="row">
+                            <div class="card-header">
+                                <h3 class="card-title">Progreso diario de despachos</h3>
+                            </div>
+                            <!-- <div class="btn-list">
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <button href="#" class="btn btn-success d-none d-sm-inline-block" id='btn-guardar'
+                                        type="submit">
+                                        TEST
+                                    </button>
+                                </form>
+                            </div> -->
+                            <div class="col-12 p-3">
+                                <div class="row">
+                                    <div class="col-xl-4 mb-3">
+                                        <label class="form-label">Filtrar por:</label>
+                                        <select type="text" class="form-select" id="select-progreso" value="">
+                                            <option value="" disabled selected>Seleccionar tipo</option>
+                                            <option value="1">Tipo de despacho</option>
+                                            <option value="2">Tipo de venta</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-4 mb-3">
+                                        <label class="form-label" style="visibility: hidden;">bt</label>
+                                        <button class="btn btn-primary w-100" id='btn-progreso' type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-adjustments-horizontal" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <circle cx="14" cy="6" r="2"></circle>
+                                                <line x1="4" y1="6" x2="12" y2="6"></line>
+                                                <line x1="16" y1="6" x2="20" y2="6"></line>
+                                                <circle cx="8" cy="12" r="2"></circle>
+                                                <line x1="4" y1="12" x2="6" y2="12"></line>
+                                                <line x1="10" y1="12" x2="20" y2="12"></line>
+                                                <circle cx="17" cy="18" r="2"></circle>
+                                                <line x1="4" y1="18" x2="15" y2="18"></line>
+                                                <line x1="19" y1="18" x2="20" y2="18"></line>
+                                            </svg>
+                                            Generar progreso diario
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id='progreso-container'>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane" id="reportes-graficos">
+
+                        <div class="row">
+                            <div class="card-header">
+                                <h3 class="card-title">Reportes gráficos</h3>
+                            </div>
+                            <form method='GET'>
+                                <div class="col-12 p-3">
+                                    <div class='row'>
+                                        <div class='col-xl-4 mb-3'>
+                                            <label class="form-label">Filtrar por:</label>
+                                            <select type="text" class="form-select" id="select-tipo-reporte"
+                                                id="select-reporte" value="">
+                                                <option value="" disabled selected>Seleccionar tipo</option>
+                                                <option value="tipo_despacho">Tipo de despacho</option>
+                                                <option value="tipo_venta">Tipo de venta</option>
+                                            </select>
+                                        </div>
+                                        <div class='col-xl-4 mb-3'>
+                                            <label class="form-label">Horizonte de tiempo:</label>
+                                            <select type="text" class="form-select" id="select-horizonte" value=""
+                                                name="select-horizonte">
+                                                <option value="" disabled selected>Seleccionar rango</option>
+                                                <option value="semanal">Últimos 7 días</option>
+                                                <option value="quincenal">Últimos 15 días</option>
+                                                <option value="mensual">Últimos 30 días</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-4 mb-3">
+                                            <label class="form-label" style="visibility: hidden;">bt</label>
+                                            <button class="btn btn-primary w-100" id='btn-generar-reporte'
+                                                type="button">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/chart-infographic -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <circle cx="7" cy="7" r="4" />
+                                                    <path d="M7 3v4h4" />
+                                                    <line x1="9" y1="17" x2="9" y2="21" />
+                                                    <line x1="17" y1="14" x2="17" y2="21" />
+                                                    <line x1="13" y1="13" x2="13" y2="21" />
+                                                    <line x1="21" y1="12" x2="21" y2="21" />
+                                                </svg>
+                                                Generar reporte
+                                            </button>
+                                        </div>
+                                    </div>
+                            </form>
+                            <div id='reportes-container' class="col-lg-12 mt-3">
+                                <div class="card" id="reportes-card" style="display: none;">
+                                    <div class="card-body">
+                                        <h3 class="card-title" id='titulo-grafico'>Cumplimiento por tipo de venta</h3>
+                                        <div id="chart-demo-line" class="chart-lg"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-error-indicadores" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted">Error al guardar la planificación</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-error-reporte" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted">Seleccione los filtros</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal-error-lineas" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted" id="content-error-lineas"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-progreso-error-filtro" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path
+                        d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Alerta</h3>
+                <div class="text-muted" id='content-error-guardar-retiro'>Debe seleccionar un tipo de progreso
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+
+                        <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                OK
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#tab-tipo-despacho").on('click', function (e) {
+        const tab = document.getElementById('tab-tipo-despacho')
+        tab.classList.add('card-active')
+        if ($('#tab-tipo-venta').hasClass('card-active')) {
+            $('#tab-tipo-venta').removeClass('card-active')
+        }
+        if ($('#tab-carga').hasClass('card-active')) {
+            $('#tab-carga').removeClass('card-active')
+        }
+        if ($('#tab-progreso').hasClass('card-active')) {
+            $('#tab-progreso').removeClass('card-active')
+        }
+        if ($('#tab-reportes').hasClass('card-active')) {
+            $('#tab-reportes').removeClass('card-active')
+        }
+        document.getElementById('card-container').style.display = null
+    })
+    $("#tab-tipo-venta").on('click', function (e) {
+        const tab = document.getElementById('tab-tipo-venta')
+        tab.classList.add('card-active')
+
+        if ($('#tab-tipo-despacho').hasClass('card-active')) {
+            $('#tab-tipo-despacho').removeClass('card-active')
+        }
+
+        if ($('#tab-carga').hasClass('card-active')) {
+            $('#tab-carga').removeClass('card-active')
+        }
+
+        if ($('#tab-progreso').hasClass('card-active')) {
+            $('#tab-progreso').removeClass('card-active')
+        }
+        if ($('#tab-reportes').hasClass('card-active')) {
+            $('#tab-reportes').removeClass('card-active')
+        }
+        document.getElementById('card-container').style.display = null
+    })
+    $("#tab-carga").on('click', function (e) {
+        const tab = document.getElementById('tab-carga')
+        tab.classList.add('card-active')
+        if ($('#tab-tipo-venta').hasClass('card-active')) {
+            $('#tab-tipo-venta').removeClass('card-active')
+        }
+        if ($('#tab-tipo-despacho').hasClass('card-active')) {
+            $('#tab-tipo-despacho').removeClass('card-active')
+        }
+        if ($('#tab-progreso').hasClass('card-active')) {
+            $('#tab-progreso').removeClass('card-active')
+        }
+        if ($('#tab-reportes').hasClass('card-active')) {
+            $('#tab-reportes').removeClass('card-active')
+        }
+        document.getElementById('card-container').style.display = null
+    })
+    $("#tab-progreso").on('click', function (e) {
+        const tab = document.getElementById('tab-progreso')
+        tab.classList.add('card-active')
+
+        if ($('#tab-tipo-despacho').hasClass('card-active')) {
+            $('#tab-tipo-despacho').removeClass('card-active')
+        }
+
+        if ($('#tab-tipo-venta').hasClass('card-active')) {
+            $('#tab-tipo-venta').removeClass('card-active')
+        }
+        if ($('#tab-carga').hasClass('card-active')) {
+            $('#tab-carga').removeClass('card-active')
+        }
+
+        if ($('#tab-reportes').hasClass('card-active')) {
+            $('#tab-reportes').removeClass('card-active')
+        }
+        document.getElementById('card-container').style.display = null
+        // document.getElementById('select-reporte').value = "";
+
+    })
+    $("#tab-reportes").on('click', function (e) {
+        const content = document.getElementById("reportes-card")
+        content.style.display = "none"
+
+        const tab = document.getElementById('tab-reportes')
+        tab.classList.add('card-active')
+
+        if ($('#tab-tipo-despacho').hasClass('card-active')) {
+            $('#tab-tipo-despacho').removeClass('card-active')
+        }
+
+        if ($('#tab-tipo-venta').hasClass('card-active')) {
+            $('#tab-tipo-venta').removeClass('card-active')
+        }
+        if ($('#tab-carga').hasClass('card-active')) {
+            $('#tab-carga').removeClass('card-active')
+        }
+
+        if ($('#tab-progreso').hasClass('card-active')) {
+            $('#tab-progreso').removeClass('card-active')
+        }
+        document.getElementById('card-container').style.display = null
+    })
+</script>
+
+<script>
+    $('#btn-progreso').on('click', function (e) {
+        var select = document.getElementById('select-progreso')
+        const container = document.getElementById("progreso-container")
+        var contador = 0
+
+        if (select.value == '') {
+            $("#modal-progreso-error-filtro").modal('show');
+            $('#select-progreso').addClass('is-invalid');
+        }
+
+        if (select.value == 1) {
+            container.innerHTML = '<div class="form-group mb-4">' +
+                '<div class="col-6 col-sm-6">' +
+                '<label class="form-label col-form-label">Total de líneas planificadas</label>' +
+                '<div class="progress">' +
+                '{% if progreso_total.cant_lineas > 0 %}' +
+                '<div class="progress-bar bg-teal" style="width: {{progreso_total.porc_exito_lineas}}%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{progreso_total.cant_exito_lineas}}/{{progreso_total.cant_lineas}} ({{progreso_total.porc_exito_lineas}}%)</span>' +
+                '{% else %}' +
+                '<div class="progress-bar" style="width:100%;background-color: #e6e8e9"" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">0/0 (0%)</span>' +
+                '{% endif %}' +
+                '</div >' +
+                '</div >' +
+                '</div >' +
+                '</div >' +
+
+                '{% if datos_progreso %}' +
+                '{% for despacho in datos_progreso %}' +
+                // `${contador += 1}` +
+                '<div class="form-group mb-4 row">' +
+                '<div class="col-6 col-sm-3">' +
+                '<label class="form-label col-form-label">{{despacho.tipo}}</label>' +
+                '<div class="progress">' +
+                '{% if despacho.cant_exito_lineas >= 1 %}' +
+                '<div class="progress-bar bg-teal" style="width: {{despacho.porc_exito_lineas}}%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{despacho.cant_exito_lineas}}/{{despacho.cant_lineas}} ({{despacho.porc_exito_lineas}}%)</span>' +
+                '{% else %}' +
+                '<div class="progress-bar" style="width:100%; background-color: #e6e8e9" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{despacho.cant_exito_lineas}}/{{despacho.cant_lineas}} ({{despacho.porc_exito_lineas}}%)</span>' +
+                '{% endif %}' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '{% endfor %}' +
+                '{% endif %}'
+
+        }
+        if (select.value == 2) {
+            container.innerHTML = '<div class="form-group mb-4">' +
+                '<div class="col-6 col-sm-6">' +
+                '<label class="form-label col-form-label">Total de líneas planificadas</label>' +
+                '<div class="progress">' +
+                '{% if progreso_total.cant_lineas > 0 %}' +
+                '<div class="progress-bar bg-teal" style="width: {{progreso_total.porc_exito_lineas}}%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{progreso_total.cant_exito_lineas}}/{{progreso_total.cant_lineas}} ({{progreso_total.porc_exito_lineas}}%)</span>' +
+                '{% else %}' +
+                '<div class="progress-bar" style="width:100%;background-color: #e6e8e9"" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">0/0 (0%)</span>' +
+                '{% endif %}' +
+                '</div >' +
+                '</div >' +
+                '</div >' +
+                '</div >' +
+
+                '{% if datos_progreso_venta %}' +
+                '{% for venta in datos_progreso_venta %}' +
+                // `${contador += 1}` +
+                '<div class="form-group mb-4 row">' +
+                '<div class="col-6 col-sm-3">' +
+                '<label class="form-label col-form-label">{{venta.tipo}}</label>' +
+                '<div class="progress">' +
+                '{% if venta.cant_exito_lineas >= 1 %}' +
+                '<div class="progress-bar bg-teal" style="width: {{venta.porc_exito_lineas}}%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{venta.cant_exito_lineas}}/{{venta.cant_lineas}} ({{venta.porc_exito_lineas}}%)</span>' +
+                '{% else %}' +
+                '<div class="progress-bar" style="width:100%; background-color: #e6e8e9" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">' +
+                '<span class="text-dark text-h3">{{venta.cant_exito_lineas}}/{{venta.cant_lineas}} ({{venta.porc_exito_lineas}}%)</span>' +
+                '{% endif %}' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '{% endfor %}' +
+                '{% endif %}'
+
+        }
+    })
+</script>
+
+<script>
+    $("#select-progreso").on('click', function (e) {
+        event.stopPropagation();
+        $('#select-progreso').removeClass("is-invalid");
+    })
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+
+        $('#btn-generar-reporte').on('click', function (e) {
+            if (document.getElementById('select-tipo-reporte').value == '' || document.getElementById('select-horizonte').value == '') {
+                event.preventDefault()
+                $('#modal-error-reporte').modal('show');
+            } else {
+                e.preventDefault();
+                const content = document.getElementById("reportes-card")
+                content.style.display = "flex"
+
+                var tipo = $('#select-tipo-reporte').val()
+                var horizonte = $('#select-horizonte').val()
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'reporte_grafico' %}",
+                    data: {
+                        'tipo': tipo,
+                        'horizonte': horizonte
+                    },
+                    success: function (response) {
+                        const content = document.getElementById("chart-demo-line")
+                        content.innerHTML = ''
+                        if (!response['valid']) {
+                            $("#modal-error-lineas").modal('show');
+                            $('#content-error-lineas').text(response['lista_fechas'])
+                        }
+                        if (tipo == 'tipo_venta') {
+                            $('#titulo-grafico').text('Cumplimiento por tipo de venta')
+
+                            var options = {
+                                noData: {
+                                    text: 'Cargando...'
+                                },
+                                chart: {
+                                    type: "line",
+                                    fontFamily: 'inherit',
+                                    height: 240,
+                                    parentHeightOffset: 0,
+                                    toolbar: {
+                                        show: true,
+                                        offsetX: 0,
+                                        offsetY: -25,
+                                    },
+                                    animations: {
+                                        enabled: true
+                                    },
+                                },
+                                fill: {
+                                    opacity: 1,
+                                },
+                                stroke: {
+                                    width: 2,
+                                    lineCap: "round",
+                                    curve: "straight",
+                                },
+                                series: [],
+                                grid: {
+                                    padding: {
+                                        top: -20,
+                                        right: 20,
+                                        left: -4,
+                                        bottom: -4
+                                    },
+                                    strokeDashArray: 5,
+                                },
+                                xaxis: {
+                                    labels: {
+                                        padding: 0,
+                                    },
+                                    tooltip: {
+                                        enabled: false
+                                    },
+                                    type: 'datetime',
+                                },
+                                yaxis: {
+                                    labels: {
+                                        padding: 4
+                                    },
+                                    max: 100,
+                                    min: 0
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                },
+                                labels: [],
+                                colors: ["#fab005", "#5eba00", "#206bc4", "#fa054f", "#fa3505", "#6a6a6a"],
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    offsetY: 12,
+                                    markers: {
+                                        width: 10,
+                                        height: 10,
+                                        radius: 100,
+                                    },
+                                    itemMargin: {
+                                        horizontal: 8,
+                                        vertical: 8
+                                    },
+                                },
+                            }
+
+                            var chart = new ApexCharts(
+                                document.querySelector("#chart-demo-line"),
+                                options
+                            );
+                            chart.render();
+                            chart.updateOptions({
+                                labels: response.lista_fechas
+                            })
+                            chart.updateSeries([{
+                                name: "1STOCK_R",
+                                data: response.stock_r
+                            }, {
+                                name: "1STOCK",
+                                data: response.stock
+                            },
+                            {
+                                name: "2CALZADO",
+                                data: response.calzado
+
+                            },
+                            {
+                                name: "2LIQUID",
+                                data: response.liquid
+                            },
+                            {
+                                name: "2PROYECT",
+                                data: response.proyect
+                            },
+                            {
+                                name: "OS",
+                                data: response.os
+                            }])
+                        }
+                        if (tipo == 'tipo_despacho') {
+                            $('#titulo-grafico').text('Cumplimiento por tipo de despacho')
+                            var options = {
+                                noData: {
+                                    text: 'Cargando...'
+                                },
+                                chart: {
+                                    type: "line",
+                                    fontFamily: 'inherit',
+                                    height: 240,
+                                    parentHeightOffset: 0,
+                                    toolbar: {
+                                        show: true,
+                                        offsetX: 0,
+                                        offsetY: -25,
+                                    },
+                                    animations: {
+                                        enabled: true
+                                    },
+                                },
+                                fill: {
+                                    opacity: 1,
+                                },
+                                stroke: {
+                                    width: 2,
+                                    lineCap: "round",
+                                    curve: "straight",
+                                },
+                                series: [],
+                                grid: {
+                                    padding: {
+                                        top: -20,
+                                        right: 20,
+                                        left: -4,
+                                        bottom: -4
+                                    },
+                                    strokeDashArray: 5,
+                                },
+                                xaxis: {
+                                    labels: {
+                                        padding: 0,
+                                    },
+                                    tooltip: {
+                                        enabled: false
+                                    },
+                                    type: 'datetime',
+                                },
+                                yaxis: {
+                                    labels: {
+                                        padding: 4
+                                    },
+                                    max: 100,
+                                    min: 0
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                },
+                                labels: [],
+                                colors: ["#fab005", "#5eba00", "#206bc4", "#fa054f", "#fa3505", "#6a6a6a"],
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    offsetY: 12,
+                                    markers: {
+                                        width: 10,
+                                        height: 10,
+                                        radius: 100,
+                                    },
+                                    itemMargin: {
+                                        horizontal: 8,
+                                        vertical: 8
+                                    },
+                                },
+                            }
+
+                            var chart = new ApexCharts(
+                                document.querySelector("#chart-demo-line"),
+                                options
+                            );
+                            chart.render();
+
+
+                            chart.updateOptions({
+                                labels: response.lista_fechas,
+
+                            })
+
+                            response.despachos.forEach(e => {
+                                chart.appendSeries({
+                                    name: e.despacho,
+                                    data: e.valores
+                                })
+                            });
+
+                            // chart.hideSeries('Limpiar')
+                            chart.toggleSeries('Limpiar')
+
+                        }
+
+                    }
+                })
+            }
+        })
+    });
+</script>
+
+
+{% if error %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modal-error-indicadores").modal('show');
+
+    });
+</script>
+{% endif %}
+
+<script>
+    const e = document.getElementById('nav-item-indicadores')
+    e.classList.add('active')
+
+</script>
+
+
+
+{% endblock %}

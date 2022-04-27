@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    Tracking
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        <!-- Content here -->
+        <div class='row row-cards'>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class='card-header'>
+                        <h3 class="card-title">Rastrear orden de venta</h3>
+                    </div>
+                    <form method='GET'>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center align-items-center mb-n3 mt-3 col-xl">
+                                <div class="col-12 col-sm-4 col-md-2 col-lg-4 mb-3" id="div_ov">
+                                    <label class="form-label">Orden de venta</label>
+                                    <input type="text" class="form-control" name="id_ov" id="id_ov"
+                                        placeholder="Ingrese el N° OV">
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center mb-n3 mt-3 col-xl">
+                                <div class="col-12 col-sm-4 col-md-2 col-lg-4 mb-3">
+                                    <button class="btn btn-primary w-100" id='btn-buscar' type="submit">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <circle cx="10" cy="10" r="7" />
+                                            <line x1="21" y1="21" x2="15" y2="15" />
+                                        </svg>
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <!-- Datos OV en Tracking< -->
+                    <div class="card-header">
+                        <h3 class="card-title">Datos OV en Tracking</h3>
+                    </div>
+
+                    <div class='card-body'>
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Orden de venta</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value='{{orden_venta}}'>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Cliente final</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value='{{cliente}}'>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Orden de compra cliente</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value='{{orden_compra}}'>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Tipo de venta</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value='{{tipo_venta}}'>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">División / Canal de venta</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value='{{canal_venta}}'>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Datos despacho en Tracking -->
+                    <div class="card-header">
+                        <h3 class="card-title">Datos despacho en Tracking</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Tipo de despacho</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value="{{tipo_despacho}}">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Transporte</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly
+                                    value="{{despacho.transporte.empresa}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Guía de despacho</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value="{{guia_despacho}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">OT Transporte / Patente</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value="{{ot}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Cita / PL</label>
+                            <div class="col-xl-6">
+                                <input type="text" class="form-control" readonly value="{{cita}}">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group mb-3 row">
+                            <label class="form-label col-3 col-form-label">Packing-List</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- Tracking por contenido de la OV -->
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h3 class="card-title">Tracking por contenido de la OV</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="gridjs gridjs-container">
+                                    <table class="gridjs-table" id="tracking-table">
+                                        <thead class="gridjs-thead">
+                                            <tr class="gridjs-tr">
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed">LÍNEA OV</th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed">CÓDIGO ARTÍCULO
+                                                </th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed"
+                                                    style="width: 400px;">DESCRIPCIÓN ARTÍCULO
+                                                </th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed">CANTIDAD</th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed"
+                                                    style="width: 150px;">NO LIBERADA</th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed"
+                                                    style="width: 150px;">EN PICKING</th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed"
+                                                    style="width: 150px;">EN EMBALAJE</th>
+                                                <th class="gridjs-th gridjs-th-sort gridjs-th-fixed"
+                                                    style="width: 150px;">EN REPARTO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="gridjs-tbody" style="text-align: center;">
+                                            {% if lineas %}
+                                            {% for l in lineas %}
+                                            <tr class="gridjs-tr">
+                                                <td class="gridjs-td">{{l.num_linea}}</td>
+                                                <td class="gridjs-td">{{l.articulo.cod_articulo}}</td>
+                                                <td class="gridjs-td">{{l.articulo.descripcion}}
+                                                </td>
+                                                <td class="gridjs-td">{{l.cantidad}}</td>
+
+                                                {% if l.estado == "OV NO LIBERADA" or l.estado == '-' %}
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-red" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td"></td>
+                                                <td class="gridjs-td"></td>
+                                                <td class="gridjs-td"></td>
+                                                {% elif l.estado == 'EN PICKING' %}
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-green" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-yellow" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td"></td>
+                                                <td class="gridjs-td"></td>
+                                                {% elif l.estado == "ENVIADA" %}
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-green" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-green" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td">
+                                                    <div class="avatar bg-yellow" style="height: 40px; width: 100px;">
+                                                    </div>
+                                                </td>
+                                                <td class="gridjs-td">
+                                                </td>
+                                                {% else %}
+                                                <td class="gridjs-td">
+                                                </td>
+                                                <td class="gridjs-td">
+                                                </td>
+                                                <td class="gridjs-td">
+                                                </td>
+                                                <td class="gridjs-td">
+                                                </td>
+                                                {% endif %}
+
+                                            </tr>
+                                            {% endfor %}
+
+                                            {% endif %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <!-- <div id="wrapper"></div> -->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal modal-blur fade" id="modal-error-tracking" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-status bg-danger"></div>
+                        <div class="modal-body text-center py-4">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 9v2m0 4v.01" />
+                                <path
+                                    d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                            </svg>
+                            <h3>Alerta</h3>
+                            <div class="text-muted">No se encontro la Orden de venta ingresada</div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="w-100">
+                                <div class="row">
+
+                                    <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                            OK
+                                        </a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal modal-blur fade" id="modal-existe-tracking" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-status bg-info"></div>
+                        <div class="modal-body text-center py-4">
+
+                            <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-info icon-lg" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M9 12l2 2l4 -4" />
+                            </svg>
+
+                            <h3>Tracking exitoso</h3>
+                            <div class="text-muted">Orden de venta encontrada</div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="w-100">
+                                <div class="row">
+
+                                    <div class="col"><a href="#" class="btn btn-info w-100" data-bs-dismiss="modal">
+                                            OK
+                                        </a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                const e = document.getElementById('nav-item-tracking')
+                e.classList.add('active')
+
+            </script>
+
+            {% if error %}
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#modal-error-tracking").modal('show');
+                });
+            </script>
+            {% endif %}
+            {% if existe %}
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#modal-existe-tracking").modal('show');
+                })
+            </script>
+            {% endif %}
+
+
+
+            {% endblock %}
